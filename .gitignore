@@ -38,5 +38,6 @@ bin/
 ### Mac OS ###
 .DS_Store
 
-### Ignore .env files ###
+### Ignore .env and secret files ###
 .env
+Encryption.java

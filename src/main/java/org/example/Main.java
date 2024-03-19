@@ -1,25 +1,14 @@
 package org.example;
 
 // Classes
-import org.example.API.GetRequest;
 import org.example.FileHandling.FileHandler;
+import org.example.API.GetRequest;
 
 // Libraries
 import java.io.File;
 
 public class Main {
     public static void main(String[] args) {
-        // TEST API CLIENT
-        // get url
-        String requestUrl = "https://spark-purple-grape.glitch.me/db";
-
-        // new api client for get request
-        var getRequest = new GetRequest(requestUrl);
-        String getResponse = getRequest.execute();
-
-        // show result
-        System.out.println(getResponse);
-
         // TEST FILE HANDLER
         // current directory and path to .env file
         String currentDirectory = System.getProperty("user.dir")
@@ -35,8 +24,15 @@ public class Main {
         // new file handler for .env file
         var fileHandler = new FileHandler(currentDirectory + envFilePath);
 
+        // TEST API CLIENT
+        // get server url
+        String requestUrl = fileHandler.getServerUrl();
+
+        // new api client for get request
+        var getRequest = new GetRequest(requestUrl);
+        String getResponse = getRequest.execute();
+
         // show result
-        System.out.println("My key is: " + fileHandler.getApiKey()
-                + "\nMy secret is: " + fileHandler.getApiSecret());
+        System.out.println(getResponse);
     }
 }
