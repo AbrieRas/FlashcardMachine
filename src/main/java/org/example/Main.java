@@ -1,11 +1,13 @@
 package org.example;
 
-// Classes
-import org.example.FileHandling.FileHandler;
+/* Classes */
 import org.example.API.GetRequest;
+import org.example.FileHandling.FileHandler;
+import org.example.Models.Flashcard;
 
-// Libraries
+/* Libraries */
 import java.io.File;
+import java.util.ArrayList;
 
 public class Main {
     public static void main(String[] args) {
@@ -22,17 +24,23 @@ public class Main {
                 + File.separator + ".env";
 
         // new file handler for .env file
-        var fileHandler = new FileHandler(currentDirectory + envFilePath);
+        var envFile = new FileHandler(currentDirectory + envFilePath);
+        envFile.loadEnvFile();
 
         // TEST API CLIENT
         // get server url
-        String requestUrl = fileHandler.getServerUrl();
+        String requestUrl = envFile.getServerUrl();
 
         // new api client for get request
         var getRequest = new GetRequest(requestUrl);
-        String getResponse = getRequest.execute();
+        ArrayList<Flashcard> flashcards = getRequest.execute();
 
         // show result
-        System.out.println(getResponse);
+        for (Flashcard flashcard : flashcards) {
+            System.out.println("Question: " + flashcard.getQuestion());
+            System.out.println("Answer: " + flashcard.getAnswer());
+            System.out.println("Retention Rating: " + flashcard.getRetentionRating());
+            System.out.println();
+        }
     }
 }
